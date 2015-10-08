@@ -1,0 +1,12 @@
+#include <stdio.h>
+#include <stdlib.h>
+int n, x, con=0x80000000;
+int main()
+{
+    scanf("%x%d", &x, &n);
+    x=x>>n;
+    con=~(con>>n<<1);
+    x=x&con;
+    printf("%x", x);
+    return 0;
+}
