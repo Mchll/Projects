@@ -1,0 +1,13 @@
+#include <stdio.h>
+#include <stdlib.h>
+union data {
+    int x;
+    char bytes[sizeof(int)];
+};
+union data c;
+int main()
+{
+    c.x=0x04030201;
+    printf("%d", c.bytes[0]);
+    return 0;
+}
