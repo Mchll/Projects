@@ -1,0 +1,12 @@
+#include <stdio.h>
+#include <stdlib.h>
+int n, x, y;
+int main()
+{
+    scanf("%d", &n);
+    x=!(!n);
+    y=n>>31;
+    x=x|y;
+    printf("%d", x);
+    return 0;
+}
