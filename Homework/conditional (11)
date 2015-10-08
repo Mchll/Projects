@@ -1,0 +1,10 @@
+#include <stdio.h>
+#include <stdlib.h>
+int x, y, z;
+int main()
+{
+    scanf("%d%d%d", &x, &y, &z);
+    x=(((!x)<<31)>>31)&z | (((!(!x))<<31)>>31)&y;
+    printf("%d", x);
+    return 0;
+}
