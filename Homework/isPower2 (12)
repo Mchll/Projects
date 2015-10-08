@@ -1,0 +1,10 @@
+#include <stdio.h>
+#include <stdlib.h>
+int n, x=0xffffffff;
+int main()
+{
+    scanf("%d", &n);
+    n=!((n&(n+x) | (n>>31)&1)|(!n));
+    printf("%d", n);
+    return 0;
+}
