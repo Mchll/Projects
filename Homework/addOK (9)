@@ -1,0 +1,12 @@
+#include <stdio.h>
+#include <stdlib.h>
+int x, y, z, mask=0x7fffffff;
+int main()
+{
+    scanf("%x%x", &x, &y);
+    z=(((x&mask)+(y&mask))>>31)&1;
+    z=((x>>31)&1)+((y>>31)&1)+z;
+    z=!(z>>1);
+    printf("%d", z);
+    return 0;
+}
