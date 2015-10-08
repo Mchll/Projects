@@ -1,0 +1,14 @@
+#include <stdio.h>
+#include <stdlib.h>
+int n, x, con=0x000000ff;
+int main()
+{
+    scanf("%x%d", &x, &n);
+    n=n+n;
+    n=n+n;
+    n=n+n;
+    x=x>>n;
+    x=x&con;
+    printf("%x", x);
+    return 0;
+}
