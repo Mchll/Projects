@@ -1,0 +1,16 @@
+#include <stdio.h>
+#include <stdlib.h>
+int con=73, y=0;
+int main()
+{
+    y=y|con;
+    con=con<<9;
+    y=y|con;
+    con=con<<9;
+    y=y|con;
+    con=con<<6;
+    y=y|con;
+    printf("%x\n",x);
+    printf("%x",y);
+    return 0;
+}
