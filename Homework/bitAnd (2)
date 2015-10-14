@@ -1,10 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-int x, y, rez;
+int bitAnd(int x, int y) {
+    return ( ~(~x | ~y) );
+}
 int main()
 {
+    int x = 0, y = 0, ans = 0;
     scanf("%i%i", &x, &y);
-    rez=~(~x|~y);
-    printf("%i",rez);
+    ans = bitAnd(x, y);
+    printf("%i", ans);
     return 0;
 }
