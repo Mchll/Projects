@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-int n, x, y;
+int sign(int n) {
+    return ((!(!n)) | (n>>31));
+}
 int main()
 {
+    int n = 0, ans = 0;
     scanf("%d", &n);
-    x=!(!n);
-    y=n>>31;
-    x=x|y;
-    printf("%d", x);
+    ans = sign(n);
+    printf("%d", ans);
     return 0;
 }
