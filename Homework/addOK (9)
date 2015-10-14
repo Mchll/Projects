@@ -1,12 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
-int x, y, z, mask=0x7fffffff;
+int addOK(int x, int y) {
+    int z = 0, mask = 0x7fffffff;
+    z = (((x&mask) + (y&mask))>>31)&1;
+    z = ((x>>31)&1) + ((y>>31)&1) + z;
+    z = !(z>>1);
+    return z;
+}
 int main()
 {
+    int x = 0, y = 0, ans = 0;
     scanf("%x%x", &x, &y);
-    z=(((x&mask)+(y&mask))>>31)&1;
-    z=((x>>31)&1)+((y>>31)&1)+z;
-    z=!(z>>1);
-    printf("%d", z);
+    ans = addOK(x, y);
+    printf("%d", ans);
     return 0;
 }
