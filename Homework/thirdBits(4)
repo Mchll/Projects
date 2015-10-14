@@ -1,16 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
-int con=73, y=0;
+int thirdBits(int y) {
+    int con = 73;
+    y = y|con;
+    con = con<<9;
+    y = y|con;
+    con = con<<9;
+    y = y|con;
+    con = con<<6;
+    y = y|con;
+    return y;
+}
 int main()
 {
-    y=y|con;
-    con=con<<9;
-    y=y|con;
-    con=con<<9;
-    y=y|con;
-    con=con<<6;
-    y=y|con;
-    printf("%x\n",x);
-    printf("%x",y);
+    int y = 0, ans = 0;
+    ans = thirdBits(y);
+    printf("%x", ans);
     return 0;
 }
