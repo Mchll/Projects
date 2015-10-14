@@ -1,14 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
-int n, x, con=0x000000ff;
+int getByte(int x, int n) {
+    int mask = 0x000000ff;
+    n = n+n;
+    n = n+n;
+    n = n+n;
+    x = (x>>n)&mask;
+    return x;
+}
 int main()
 {
+    int n = 0, x = 0, ans = 0;
     scanf("%x%d", &x, &n);
-    n=n+n;
-    n=n+n;
-    n=n+n;
-    x=x>>n;
-    x=x&con;
-    printf("%x", x);
+    ans = getByte(x, n);
+    printf("%x", ans);
     return 0;
 }
