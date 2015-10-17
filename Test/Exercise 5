@@ -2,7 +2,8 @@
 #include <iostream>
 #define ll long long
 using namespace std;
-ll a[100000], i, k = 0, n;
+ll a[100000], i, n;
+bool k = true;
 int main()
 {
 	cin >> n;
@@ -11,10 +12,10 @@ int main()
 	}
 	for(i = 1; i <= n / 2; ++i) {
 		if(a[i] != a[n - i + 1]) {
-			k = 1;
+			k = false;
 		}
 	}
-	if(k == 1) {
+	if(k == false) {
 		cout << "NO";
 	}
 	else {
