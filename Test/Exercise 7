@@ -1,0 +1,26 @@
+//7. Простые числа, не превосходящие заданного.
+#include <iostream>
+#include <vector>
+#define ll long long
+using namespace std;
+vector <ll> v;
+ll j, n;
+int i;
+bool z[1000000];
+int main()
+{
+	cin >> n;
+	for(i = 2; i <= n; ++i) {
+		if(z[i] == false) {
+			v.push_back(i);
+			j = 1;
+			while(j * i <= n) {
+				z[j * i] = true;
+				++j;
+			}
+		}
+	}
+	for(i = 0; i < int(v.size()); ++i)
+		cout << v[i] << ' ';
+	return 0;
+}
