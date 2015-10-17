@@ -1,0 +1,25 @@
+//3. Быстрое возведение в степень.
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#define ll long long
+using namespace std;
+ll a, n, nn, ans = 1;
+int i;
+vector <ll> v;
+int main()
+{
+	cin >> a >> n;
+	nn = n;
+	while(nn > 0) {
+		v.push_back(nn%2);
+		nn = nn/2;
+	}
+	reverse(v.begin(), v.end());
+	for(i = 0; i < int(v.size()); ++i) {
+		if(v[i] == 1) ans = ans * a;
+		if(i != v.size() - 1) ans = ans * ans;
+	}
+	cout << ans;
+	return 0;
+}
