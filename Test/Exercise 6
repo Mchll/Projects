@@ -16,7 +16,7 @@ int main()
 		}
 		if(s[i] != ' ') t = t + s[i];
 	}
-	for(i = 0; i <= int(t.length()/2); ++i) {
+	for(i = 0; i <= int(t.length() / 2); ++i) {
 		if(t[i] != t[t.length() - i - 1]) {
 			k = false;
 		}
