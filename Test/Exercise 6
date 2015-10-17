@@ -1,0 +1,31 @@
+//6. Является ли строка палиндромом.
+#include <iostream>
+#include <string>
+#define ll long long
+#define ui unsigned int
+using namespace std;
+string s, t;
+int i;
+bool k = true;
+int main()
+{
+	getline(cin, s);
+	for(i = 0; i < int(s.length()); ++i) {
+		if(static_cast<int> (s[i]) >= static_cast<int> ('A') && static_cast<int> (s[i]) <= static_cast<int> ('Z')) {
+			s[i] = static_cast<char> (static_cast<int> (s[i]) - static_cast<int> ('A') + static_cast<int> ('a'));
+		}
+		if(s[i] != ' ') t = t + s[i];
+	}
+	for(i = 0; i <= int(t.length()/2); ++i) {
+		if(t[i] != t[t.length() - i - 1]) {
+			k = false;
+		}
+	}
+	if(k == false) {
+		cout << "NO";
+	}
+	else {
+		cout << "YES";
+	}
+	return 0;
+}
