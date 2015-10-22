@@ -9,20 +9,31 @@ union data {
     float f;
 };
 union data fl;
+struct answer {
+    unsigned int s;
+    unsigned int m;
+    unsigned int e;
+};
+struct answer ans;
+struct answer floatBits2 (float f) {
+    fl.f = f;
+    struct answer ans1;
+    ans1.s = fl.field.s;
+    ans1.e = fl.field.e;
+    ans1.m = fl.field.m;
+    return ans1;
+};
 int main()
 {
-    unsigned int sign = 0, mantiss = 0, exponent = 0;
-    int k;
-    scanf("%f", &fl.f);
-    sign = fl.field.s;
-    exponent = fl.field.e;
-    mantiss = fl.field.m;
-    k = exponent - 127;
+    float f = 0;
+    scanf("%f", &f);
+    ans = floatBits2(f);
+    int k = ans.e - 127;
     if(k >= 0) {
-        printf("(-1)^%d * 1.%d * 2^%d", sign, mantiss, exponent - 127);
+        printf("(-1)^%d * 1.%d * 2^%d", ans.s, ans.m, ans.e - 127);
     }
     else {
-        printf("(-1)^%d * 1.%d * 2^(%d)", sign, mantiss, exponent - 127);
+        printf("(-1)^%d * 1.%d * 2^(%d)", ans.s, ans.m, ans.e - 127);
     }
     return 0;
 }
