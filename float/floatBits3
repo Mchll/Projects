@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct answer {
+    unsigned int s;
+    unsigned int m;
+    unsigned int e;
+};
+struct answer ans;
+struct answer floatBits3 (float f) {
+    int mask_sign = 0x00000001, mask_exponent = 0x000000FF, mask_mantiss = 0x007FFFFF;
+    int *pointer = (int *) (&f);
+    struct answer ans1;
+    ans1.s = (*pointer >> 31) & mask_sign;
+    ans1.e = (*pointer >> 23) & mask_exponent;
+    ans1.m = (*pointer & mask_mantiss);
+    return ans1;
+};
+int main()
+{
+    float f = 0;
+    scanf("%f", &f);
+    ans = floatBits3(f);
+    int k = ans.e - 127;
+    if(k >= 0) {
+        printf("(-1)^%d * 1.%d * 2^%d", ans.s, ans.m, ans.e - 127);
+    }
+    else {
+        printf("(-1)^%d * 1.%d * 2^(%d)", ans.s, ans.m, ans.e - 127);
+    }
+    return 0;
+}
