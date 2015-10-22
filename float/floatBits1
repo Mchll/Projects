@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <stdlib.h>
+union data {
+    float f;
+    int i;
+};
+union data fl;
+int main()
+{
+    int mask_sign = 0x00000001, mask_exponent = 0x000000FF, mask_mantiss = 0x007FFFFF;
+    int s = 0, m = 0, e = 0;
+    scanf("%f", &fl.f);
+    s = (fl.i >> 31) & mask_sign;
+    e = (fl.i >> 23) & mask_exponent;
+    m = (fl.i & mask_mantiss);
+    if(e - 127 >= 0) {
+        printf("(-1)^%d * 1.%d * 2^%d", s, m, e - 127);
+    }
+    else {
+        printf("(-1)^%d * 1.%d * 2^(%d)", s, m, e - 127);
+    }
+    return 0;
+}
