@@ -3,16 +3,16 @@
 #include <string>
 #define ll long long
 using namespace std;
-string s, s1, t;
-ll z[1000000];
-ll l, r, n, k, i;
+string s, tsecond, tfirst;
+ll z[1000000] = {0, };
+ll l, r, n, ans, i;
 int main()
 {
-	getline(cin, t);
-	getline(cin, s1);
-	s = s1 + '#' + t;
+	getline(cin, tfirst);
+	getline(cin, tsecond);
+	s = tsecond + '#' + tfirst;
 	n = s.length();
-	for(i = 1 + s1.length(); i < n; ++i) {
+	for(i = 1 + tsecond.length(); i < n; ++i) {
 		if(i <= r) {
 			z[i] = min(z[i - l], r - i + 1);		
 		}
@@ -24,11 +24,11 @@ int main()
 			r = i + z[i] - 1;
 		}
 	}
-	for(i = 1 + s1.length(); i < n; ++i) {
-		if(z[i] == s1.length()) {
-			++k;
+	for(i = 1 + tsecond.length(); i < n; ++i) {
+		if(z[i] == tsecond.length()) {
+			++ans;
 		}
 	}
-	cout << k;
+	cout << ans;
 	return 0;
 }
