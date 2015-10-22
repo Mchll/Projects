@@ -4,7 +4,7 @@
 #define ll long long
 using namespace std;
 string s, tsecond, tfirst;
-ll z[1000000] = {0, };
+ll z[1000000];
 ll l, r, n, ans, i;
 int main()
 {
