@@ -6,7 +6,7 @@ int addOK(int x, int y) {
     x = (x >> 31) & 1;
     y = (y >> 31) & 1;
     z = (z >> 31) & 1;
-    return (((z & x) + (z & y)) & 1 + ! (x | y | z));
+    return ((((z & x) + (z & y)) & 1) + (! (x | y | z)));
 }
 int main()
 {
@@ -16,4 +16,3 @@ int main()
     printf("%d", ans);
     return 0;
 }
-
