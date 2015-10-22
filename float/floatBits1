@@ -4,20 +4,32 @@ union data {
     float f;
     int i;
 };
+struct answer{
+    int s;
+    int e;
+    int m;
+};
+struct answer ans;
 union data fl;
+struct answer floatBits1 (float f) {
+    int mask_sign = 0x00000001, mask_exponent = 0x000000FF, mask_mantiss = 0x007FFFFF;
+    fl.f = f;
+    struct answer ans1;
+    ans1.s = (fl.i >> 31) & mask_sign;
+    ans1.e = (fl.i >> 23) & mask_exponent;
+    ans1.m = (fl.i & mask_mantiss);
+    return ans1;
+}
 int main()
 {
-    int mask_sign = 0x00000001, mask_exponent = 0x000000FF, mask_mantiss = 0x007FFFFF;
-    int s = 0, m = 0, e = 0;
-    scanf("%f", &fl.f);
-    s = (fl.i >> 31) & mask_sign;
-    e = (fl.i >> 23) & mask_exponent;
-    m = (fl.i & mask_mantiss);
-    if(e - 127 >= 0) {
-        printf("(-1)^%d * 1.%d * 2^%d", s, m, e - 127);
+    float f = 0;
+    scanf("%f", &f);
+    ans = floatBits1(f);
+    if(ans.e - 127 >= 0) {
+        printf("(-1)^%d * 1.%d * 2^%d", ans.s, ans.m, ans.e - 127);
     }
     else {
-        printf("(-1)^%d * 1.%d * 2^(%d)", s, m, e - 127);
+        printf("(-1)^%d * 1.%d * 2^(%d)", ans.s, ans.m, ans.e - 127);
     }
     return 0;
 }
