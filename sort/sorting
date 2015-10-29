@@ -1,0 +1,118 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define MAXLENGTH 100000000
+int a_cs[MAXLENGTH], a_qs[MAXLENGTH], a_bs[MAXLENGTH], arr[MAXLENGTH];
+
+void warmup(int i) {
+    int x = 3;
+    int y = 33;
+    int z = x + y + i;
+}
+void counting_sort(int n, int *a_cs) {
+    int i = 0, maxi = 0, j = 0;
+    for(i = 0; i < MAXLENGTH; ++i) {
+        arr[i] = 0;
+    }
+    for(i = 0; i < n; ++i) {
+        if(a_cs[i] > maxi) {
+            maxi = a_cs[i];
+        }
+        arr[a_cs[i]]++;
+        a_cs[i] = 0;
+    }
+    for(i = 0; i <= maxi; ++i) {
+        while(arr[i] > 0) {
+            arr[i]--;
+            a_cs[j] = i;
+            ++j;
+        }
+    }
+}
+
+void quick_sort(int l, int r, int *a_qs) {
+    int i = 0, j = 0, m = 0, p = 0;
+    m = a_qs[(l + r) / 2];
+    i = l;
+    j = r;
+    while(i <= j) {
+        while(a_qs[i] < m) {
+            ++i;
+        }
+        while(a_qs[j] > m) {
+            j--;
+        }
+        if(i <= j) {
+            p = a_qs[i];
+            a_qs[i] = a_qs[j];
+            a_qs[j] = p;
+            ++i;
+            j--;
+        }
+    }
+        if(l < j) {
+            quick_sort(l, j, a_qs);
+        }
+        if(i < r) {
+            quick_sort(i, r, a_qs);
+        }
+}
+
+void bubble_sort(int n, int *a_bs) {
+    int i = 0, j = 0;
+    for(i = 0; i < n; ++i) {
+        for(j = 0; j < n - 1; ++j) {
+            if(a_bs[j] > a_bs[j+1]) {
+                int p = a_bs[j];
+                a_bs[j] = a_bs[j+1];
+                a_bs[j+1] = p;
+            }
+        }
+    }
+}
+int main()
+{
+    int n = 0, i = 0;
+    scanf("%d", &n);
+    int a[n], a_cs[n], a_qs[n], a_bs[n];
+    for(i = 0; i < n; ++i) {
+        scanf("%d", &a[i]);
+        a_cs[i] = a[i];
+        a_qs[i] = a[i];
+        a_bs[i] = a[i];
+    }
+
+    counting_sort(n, a_cs);
+    quick_sort(0, n-1, a_qs);
+    bubble_sort(n, a_bs);
+
+    printf("counting_sort: ");
+    for(i = 0; i < n; ++i) {
+        printf("%d ", a_cs[i]);
+    }
+    printf("\n");
+
+    printf("quick_sort   : ");
+    for(i = 0; i < n; ++i) {
+        printf("%d ", a_qs[i]);
+    }
+    printf("\n");
+
+    printf("bubble_sort  : ");
+    for(i = 0; i < n; ++i) {
+        printf("%d ", a_bs[i]);
+    }
+    
+    return 0;
+}
+
+//			        counting_sort		      quick_sort		     bubble_sort
+//	n = 5   	0.562000000000000	  0.000000000000000 	0.000000000000000
+//	n = 10  	0.578000000000000 	0.000000000000000 	0.000000000000000
+//	n = 100 	0.567000000000000	  0.000000000000000	  0.000000000000000
+//	n = 1k  	0.562000000000000 	0.000000000000000	  0.016000000000000
+//	n = 10k 	0.578000000000000	  0.000000000000000	  1.344000000000000
+//	n = 100k	0.575000000000000 	0.000000000000000	       	n/a
+//	n = 1M  	0.601000000000000 	0.125000000000000	       	n/a
+//	n = 10M 	0.797000000000000	  3.187000000000000	       	n/a
+//	n = 100M	3.063000000000000	  31.90299999999999	      	n/a
