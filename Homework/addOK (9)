@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 int addOK(int x, int y) {
-    int z = 0;
-    z = x + y;
-    x = (x >> 31) & 1;
-    y = (y >> 31) & 1;
-    z = (z >> 31) & 1;
-    return ((((z & x) + (z & y)) & 1) + (! (x | y | z)));
+    int sum = 0;
+    sum = x + y;
+    x = x >> 31;
+    y = y >> 31;
+    sum = sum >> 31;
+    return (!((x ^ sum) & (y ^ sum)));
 }
 int main()
 {
