@@ -1,0 +1,15 @@
+#include <stdio.h>
+#include <stdlib.h>
+int isPower2(int n) {
+    int mask = 0xffffffff;
+    n = !((n&(n+mask) | (n>>31)&1) | (!n));
+    return n;
+}
+int main()
+{
+    int n = 0, ans = 0;
+    scanf("%d", &n);
+    ans = isPower2(n);
+    printf("%d", ans);
+    return 0;
+}

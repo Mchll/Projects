@@ -1,0 +1,14 @@
+#include <stdio.h>
+#include <stdlib.h>
+int fitsBits(int x, int n) {
+    int con = 0xffffffff;
+    return ((!((x + (x>>31))>>(n + con))) | (!(((~x))>>(n + con))));
+}
+int main()
+{
+    int x = 0, n = 0, ans = 0;
+    scanf("%d%d", &x, &n);
+    ans = fitsBits(x, n);
+    printf("%d", ans);
+    return 0;
+}

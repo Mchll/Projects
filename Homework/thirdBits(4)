@@ -1,0 +1,22 @@
+#include <stdio.h>
+#include <stdlib.h>
+int thirdBits() {
+    int con = 73, num = 0;
+    con = con << 2;
+    num = num | con;
+    con = con << 9;
+    num = num | con;
+    con = con << 9;
+    num = num | con;
+    con = con << 3;
+    num = num | con;
+    return num;
+}
+int main()
+{
+    int ans = 0;
+    ans = thirdBits();
+    printf("%d", ans);
+    return 0;
+}
+

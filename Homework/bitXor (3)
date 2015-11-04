@@ -1,0 +1,13 @@
+#include <stdio.h>
+#include <stdlib.h>
+int bitXor(int x, int y) {
+    return ((~(x & y)) & (~((~x) & (~y))));
+}
+int main()
+{
+    int x = 0, y = 0, ans = 0;
+    scanf("%i%i", &x, &y);
+    ans = bitXor(x, y);
+    printf("%i", ans);
+    return 0;
+}

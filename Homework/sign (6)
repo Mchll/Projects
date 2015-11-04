@@ -1,0 +1,13 @@
+#include <stdio.h>
+#include <stdlib.h>
+int sign(int n) {
+    return ((!(!n)) | (n>>31));
+}
+int main()
+{
+    int n = 0, ans = 0;
+    scanf("%d", &n);
+    ans = sign(n);
+    printf("%d", ans);
+    return 0;
+}

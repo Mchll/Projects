@@ -1,0 +1,16 @@
+#include <stdio.h>
+#include <stdlib.h>
+int bang(int x) {
+    int y = 0;
+    y=(~x)+1;
+    x=((x>>31)+1)&((y>>31)+1);
+    return x;
+}
+int main()
+{
+    int x = 0, y = 0, ans = 0;
+    scanf("%d", &x);
+    ans = bang(x);
+    printf("%d", ans);
+    return 0;
+}

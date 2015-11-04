@@ -1,0 +1,14 @@
+#include <stdio.h>
+#include <stdlib.h>
+int conditional(int x, int y, int z) {
+    x=(((!x)<<31)>>31)&z | (((!(!x))<<31)>>31)&y;
+    return x;
+}
+int main()
+{
+    int x = 0, y = 0, z = 0, ans = 0;
+    scanf("%d%d%d", &x, &y, &z);
+    ans = conditional(x, y, z);
+    printf("%d", ans);
+    return 0;
+}

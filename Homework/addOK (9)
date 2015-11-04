@@ -1,0 +1,18 @@
+#include <stdio.h>
+#include <stdlib.h>
+int addOK(int x, int y) {
+    int sum = 0;
+    sum = x + y;
+    x = x >> 31;
+    y = y >> 31;
+    sum = sum >> 31;
+    return (!((x ^ sum) & (y ^ sum)));
+}
+int main()
+{
+    int x = 0, y = 0, ans = 0;
+    scanf("%d%d", &x, &y);
+    ans = addOK(x, y);
+    printf("%d", ans);
+    return 0;
+}
