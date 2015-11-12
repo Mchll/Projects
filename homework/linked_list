@@ -1,0 +1,95 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <malloc.h>
+
+typedef struct node {
+    int data;
+    struct node *next;
+} node;
+
+node* getLast(node *head) {
+    if (head == NULL) {
+        return head;
+    }
+    while (head->next) {
+        head = head->next;
+    }
+    return head;
+}
+
+void add(int val, node *head) {
+    node *last = getLast(head);
+    node *tmp = (node*) malloc(sizeof(node));
+    if(tmp != NULL) {
+        tmp->data = val;
+        tmp->next = NULL;
+        last->next = tmp;
+    }
+    else {
+        scanf("MALLOC ERROR\n");
+    }
+}
+
+void delet(int val, node *head) {
+    while(head->next->next != NULL) {
+        if(head->next->data == val) {
+            break;
+        }
+        head = head->next;
+    }
+    node *tmp = head->next;
+    head->next = tmp->next;
+    free(tmp);
+}
+
+void print(node *head) {
+    head = head->next;
+    while(head) {
+        printf("%d ", head->data);
+        head = head->next;
+    }
+    printf("\n");
+}
+
+void quit(node *head) {
+    while(head) {
+        node *tmp = head->next;
+        free(head);
+        head = tmp;
+    }
+}
+
+int main()
+{
+    char command;
+    int val = 0;
+    node *head = (node*) malloc(sizeof(node));
+    head->data = NULL;
+    head->next = NULL;
+
+    while(1) {
+
+        scanf("%c", &command);
+
+        if(command == 'a') {
+            scanf("%d", &val);
+            add(val, head);
+        }
+
+        if(command == 'r') {
+            scanf("%d", &val);
+            delet(val, head);
+        }
+
+        if(command == 'p') {
+            print(head);
+        }
+
+        if(command == 'q') {
+            quit(head);
+            break;
+        }
+
+    }
+    return 0;
+}
