@@ -1,0 +1,186 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAXLENGTH 1000
+#define MAXN 12345678
+
+int mystrlen(char *str) {
+    int i = 0;
+    while(1) {
+        if(str[i] == '\0') {
+            break;
+        }
+        else {
+            i++;
+        }
+    }
+    return i;
+}
+
+int strcmp(char *s1, char *s2) {
+    int s1_length, s2_length, i = 0;
+    s1_length = mystrlen(s1);
+    s2_length = mystrlen(s2);
+    while(1) {
+        if(i >= s1_length && i >= s2_length) {
+            return 0;
+        }
+        if(i >= s1_length) {
+            return -1;
+        }
+        if(i >= s2_length) {
+            return 1;
+        }
+        if(s1[i] > s2[i]) {
+            return 1;
+        }
+        if(s1[i] < s2[i]) {
+            return -1;
+        }
+        i++;
+    }
+}
+
+void strcpy(char *dst, char *src) {
+    int i;
+    int n = mystrlen(dst);
+    for(i = 0; i <= n; ++i) {
+        src[i] = dst[i];
+    }
+}
+
+void strcat (char *dst, char *src) {
+    int dst_length = mystrlen(dst);
+    int src_length = mystrlen(src);
+    int i;
+    for(i = dst_length; i < dst_length + src_length; ++i) {
+        dst[i] = src[i - dst_length];
+    }
+}
+
+typedef struct node {
+    int code;
+    char str[MAXLENGTH];
+    int data;
+    struct node *next;
+} node;
+
+int hash_code(char *s) {
+    int i = 0, j = 1, code_symbol = 1, code = 0;
+    int s_length = mystrlen(s);
+    for(i = 0; i < s_length; ++i) {
+        j = (j * 31) % MAXN;
+        code_symbol = ((int)(s[i]) * j) % MAXN;
+        code = (code + code_symbol) % MAXN;
+    }
+    return code;
+}
+
+void get_into_table (char *s, int code_s, node *head) {
+    node *tmp = (node*) malloc(sizeof(node));
+    if(tmp == NULL) {
+        printf("ERROR");
+    }
+    tmp = head;
+    int ans = 0;
+    while(1) {
+        if(tmp->code == code_s) {
+            ans = strcmp(s, tmp->str);
+            if(ans == 0) {
+                (tmp->data)++;
+                break;
+            }
+        }
+        else if(tmp->next == NULL) {
+            node *last = (node*) malloc(sizeof(node));
+            if(last == NULL) {
+                printf("ERROR");
+            }
+            tmp->next = last;
+            last->code = code_s;
+            last->data = 1;
+            last->next = NULL;
+            strcpy(s, last->str);
+            break;
+        }
+
+        tmp = tmp->next;
+    }
+}
+
+void print_table(node *head) {
+    int len = 0, i = 0;
+    node *tmp = (node*) malloc(sizeof(node));
+    if(tmp == NULL) {
+        printf("ERROR");
+    }
+    if(head->next != NULL) {
+        tmp = head->next;
+        while(tmp != NULL) {
+            len = mystrlen(tmp->str);
+            for(i = 0; i < len; ++i) {
+                printf("%c", tmp->str[i]);
+            }
+            printf(" %d\n", tmp->data);
+            tmp = tmp->next;
+        }
+    }
+}
+
+void count_strings(node *head) {
+    int n, i, code_s;
+    char *s = (char *) malloc(sizeof(char) * MAXLENGTH);
+    if(s == NULL) {
+        printf("ERROR");
+    }
+    scanf("%d", &n);
+    gets(s);
+    for(i = 0; i < n; ++i) {
+        gets(s);
+        code_s = hash_code(s);
+        get_into_table(s, code_s, head);
+    }
+    print_table(head);
+}
+
+void one_another() {
+    int i = 0, n = 0, s_length = 0, j = 0;
+    int *a = (int *) malloc(sizeof(int) * MAXLENGTH);
+    if(a == NULL) {
+        printf("ERROR");
+    }
+    char *s = (char *) malloc(sizeof(char) * MAXLENGTH);
+    if(s == NULL) {
+        printf("ERROR");
+    }
+    for(i = 0; i < MAXLENGTH; ++i) {
+        a[i] = 0;
+    }
+    scanf("%d", &n);
+    gets(s);
+    for(i = 0; i < n * 2 + 1; ++i) {
+        gets(s);
+        s_length = mystrlen(s);
+        for(j = 0; j < s_length; ++j) {
+            a[j] = a[j] ^ (int)(s[j]);
+        }
+    }
+    i = 0;
+    while(a[i] != 0) {
+        printf("%c", (char)(a[i]));
+        ++i;
+    }
+    printf("\n");
+}
+
+int main()
+{
+    node *head = (node*) malloc(sizeof(node));
+    if(head == NULL) {
+        printf("ERROR");
+    }
+    head->next = NULL;
+    head->code = -100;
+    head->data = -100;
+
+    return 0;
+}
