@@ -5,29 +5,22 @@
 
 int mystrlen(char *str) {
     int i = 0;
-    while(1) {
-        if(str[i] == '\0') {
-            break;
-        }
-        else {
-            i++;
-        }
+    while(str[i]) {
+        i++;
     }
     return i;
 }
 
 int strcmp(char *s1, char *s2) {
-    int s1_length, s2_length, i = 0;
-    s1_length = mystrlen(s1);
-    s2_length = mystrlen(s2);
+    int i = 0;
     while(1) {
-        if(i >= s1_length && i >= s2_length) {
+        if(s1[i] == '\0' && s2[i] == '\0') {
             return 0;
         }
-        if(i >= s1_length) {
+        if(s1[i] == '\0') {
             return -1;
         }
-        if(i >= s2_length) {
+        if(s2[i] == '\0') {
             return 1;
         }
         if(s1[i] > s2[i]) {
@@ -41,10 +34,13 @@ int strcmp(char *s1, char *s2) {
 }
 
 void strcpy(char *dst, char *src) {
-    int i;
-    int n = mystrlen(dst);
-    for(i = 0; i <= n; ++i) {
+    int i = 0;
+    while(1) {
         src[i] = dst[i];
+        if(dst[i] == '\0') {
+            break;
+        }
+        i++;
     }
 }
 
@@ -52,7 +48,7 @@ void strcat (char *dst, char *src) {
     int dst_length = mystrlen(dst);
     int src_length = mystrlen(src);
     int i;
-    for(i = dst_length; i < dst_length + src_length; ++i) {
+    for(i = dst_length; i <= dst_length + src_length; ++i) {
         dst[i] = src[i - dst_length];
     }
 }
