@@ -86,7 +86,7 @@ void get_into_table (char *s, int code_s, node *head) {
                 break;
             }
         }
-        else if(tmp->next == NULL) {
+        if(tmp->next == NULL) {
             node *last = (node*) malloc(sizeof(node));
             if(last == NULL) {
                 printf("ERROR");
