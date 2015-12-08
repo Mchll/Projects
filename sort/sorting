@@ -131,24 +131,9 @@ int main()
         printf("%d ", a_bs[i]);
     }
 
-    for(i = 0; i < n; ++i) {
-        free(a_cs[i]);
-    }
     free(a_cs);
-
-    for(i = 0; i < n; ++i) {
-        free(a_qs[i]);
-    }
     free(a_qs);
-
-    for(i = 0; i < n; ++i) {
-        free(a_bs[i]);
-    }
     free(a_bs);
-
-    for(i = 0; i < n; ++i) {
-        free(a[i]);
-    }
     free(a);
     
     return 0;
