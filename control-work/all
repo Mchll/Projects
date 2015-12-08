@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define MAXLENGTH 1000
-#define MAXN 12345678
+#define MAXN 123400
 
 int mystrlen(char *str) {
     int i = 0;
@@ -54,11 +54,17 @@ void strcat (char *dst, char *src) {
 }
 
 typedef struct node {
-    int code;
     char str[MAXLENGTH];
     int data;
     struct node *next;
 } node;
+
+void initialize_hash_table(node **hash_table) {
+    int i = 0;
+    for(i = 0; i < MAXN; ++i) {
+        hash_table[i] = NULL;
+    }
+}
 
 int hash_code(char *s) {
     int i = 0, j = 1, code_symbol = 1, code = 0;
@@ -71,82 +77,111 @@ int hash_code(char *s) {
     return code;
 }
 
-void get_into_table (char *s, int code_s, node *head) {
-    node *tmp = (node*) malloc(sizeof(node));
+void set_into_table (char *s, node **hash_table) {
+    int code_s = 0, ans = 0;
+    code_s = hash_code(s);
+    node *tmp = (node *) malloc(sizeof(node));
     if(tmp == NULL) {
-        printf("ERROR");
+        printf("ERROR\n");
     }
-    tmp = head;
-    int ans = 0;
-    while(1) {
-        if(tmp->code == code_s) {
+    if(hash_table[code_s] == NULL) {
+        tmp->data = 1;
+        tmp->next = NULL;
+        strcpy(s, tmp->str);
+        hash_table[code_s] = tmp;
+    }
+    else {
+        tmp = hash_table[code_s];
+        while(1) {
             ans = strcmp(s, tmp->str);
             if(ans == 0) {
-                (tmp->data)++;
+                tmp->data++;
                 break;
             }
-        }
-        if(tmp->next == NULL) {
-            node *last = (node*) malloc(sizeof(node));
-            if(last == NULL) {
-                printf("ERROR");
+            else {
+                if(tmp->next != NULL) {
+                    tmp = tmp->next;
+                }
+                else {
+                    node *last = (node *) malloc(sizeof(node));
+                    if(last == NULL) {
+                        printf("ERROR\n");
+                    }
+                    last->data = 1;
+                    last->next = NULL;
+                    strcpy(s, last->str);
+                    break;
+                }
             }
-            tmp->next = last;
-            last->code = code_s;
-            last->data = 1;
-            last->next = NULL;
-            strcpy(s, last->str);
-            break;
         }
-
-        tmp = tmp->next;
     }
 }
 
-void print_table(node *head) {
-    int len = 0, i = 0;
-    node *tmp = (node*) malloc(sizeof(node));
+void print_table(node **hash_table) {
+    int i = 0, j = 0, n = 0;
+    node *tmp = (node *) malloc(sizeof(node));
     if(tmp == NULL) {
-        printf("ERROR");
+        printf("ERROR\n");
     }
-    if(head->next != NULL) {
-        tmp = head->next;
+    for(i = 0; i < MAXN; ++i) {
+        tmp = hash_table[i];
         while(tmp != NULL) {
-            len = mystrlen(tmp->str);
-            for(i = 0; i < len; ++i) {
-                printf("%c", tmp->str[i]);
+            printf("%d ", tmp->data);
+            n = mystrlen(tmp->str);
+            for(j = 0; j < n; ++j) {
+                printf("%c", tmp->str[j]);
             }
-            printf(" %d\n", tmp->data);
+            printf("\n");
             tmp = tmp->next;
         }
     }
 }
 
-void count_strings(node *head) {
-    int n, i, code_s;
+void count_strings(node **hash_table) {
+    int n = 0, i = 0;
     char *s = (char *) malloc(sizeof(char) * MAXLENGTH);
     if(s == NULL) {
-        printf("ERROR");
+        printf("ERROR\n");
     }
     scanf("%d", &n);
     gets(s);
     for(i = 0; i < n; ++i) {
         gets(s);
-        code_s = hash_code(s);
-        get_into_table(s, code_s, head);
+        set_into_table(s, hash_table);
     }
-    print_table(head);
+    print_table(hash_table);
+}
+
+void clear_hash_table(node **hash_table) {
+    int i = 0;
+    node *tmp = (node *) malloc(sizeof(node));
+    if(tmp == NULL) {
+        printf("ERROR\n");
+    }
+    node *tmpnext = (node *) malloc(sizeof(node));
+    if(tmpnext == NULL) {
+        printf("ERROR\n");
+    }
+    for(i = 0; i < MAXN; ++i) {
+        tmp = hash_table[i];
+        while(tmp != NULL) {
+            tmpnext = tmp->next;
+            free(tmp);
+            tmp = tmpnext;
+        }
+    }
+    free(hash_table);
 }
 
 void one_another() {
     int i = 0, n = 0, s_length = 0, j = 0;
     int *a = (int *) malloc(sizeof(int) * MAXLENGTH);
     if(a == NULL) {
-        printf("ERROR");
+        printf("ERROR\n");
     }
     char *s = (char *) malloc(sizeof(char) * MAXLENGTH);
     if(s == NULL) {
-        printf("ERROR");
+        printf("ERROR\n");
     }
     for(i = 0; i < MAXLENGTH; ++i) {
         a[i] = 0;
@@ -170,13 +205,14 @@ void one_another() {
 
 int main()
 {
-    node *head = (node*) malloc(sizeof(node));
-    if(head == NULL) {
-        printf("ERROR");
+    node **hash_table = (node **) malloc(sizeof(node) * MAXN);
+    if(hash_table == NULL) {
+        printf("ERROR\n");
     }
-    head->next = NULL;
-    head->code = -100;
-    head->data = -100;
+    initialize_hash_table(hash_table);
 
+    count_strings(hash_table);
+
+    clear_hash_table(hash_table);
     return 0;
 }
