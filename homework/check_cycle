@@ -8,36 +8,39 @@ typedef struct node {
 } node;
 
 node* getLast(node *head) {
-    if (head == NULL) {
-        return head;
-    }
-    while (head->next) {
+    while (head->next != NULL) {
         head = head->next;
     }
     return head;
 }
 
 void add(int val, node *head) {
-    node *last = getLast(head);
-    node *tmp = (node*) malloc(sizeof(node));
-    if(tmp != NULL) {
-        tmp->data = val;
-        tmp->next = NULL;
-        last->next = tmp;
+    node *last = (node *) malloc(sizeof(node));
+    if(last == NULL) {
+        printf("ERROR\n");
     }
-    else {
-        scanf("MALLOC ERROR\n");
+    node *tmp = (node *) malloc(sizeof(node));
+    if(tmp == NULL) {
+        printf("ERROR\n");
     }
+    last = getLast(head);
+    tmp->data = val;
+    tmp->next = NULL;
+    last->next = tmp;
 }
 
-void delet(int val, node *head) {
-    while(head->next->next != NULL) {
+void remove_from(int val, node *head) {
+    node *tmp = (node *) malloc(sizeof(node));
+    if(tmp == NULL) {
+        printf("ERROR\n");
+    }
+    while(head->next != NULL) {
         if(head->next->data == val) {
             break;
         }
         head = head->next;
     }
-    node *tmp = head->next;
+    tmp = head->next;
     head->next = tmp->next;
     free(tmp);
 }
@@ -60,13 +63,25 @@ void quit(node *head) {
 }
 
 void create_cycle(node *head) {
-    node *last = getLast(head);
+    node *last = (node *) malloc(sizeof(node));
+    if(last == NULL) {
+        printf("ERROR\n");
+    }
+    last = getLast(head);
     last->next = head->next;
 }
 
 int check_cycle(node *head) {
-    node *fast = head->next;
-    node *slow = head->next;
+    node *fast = (node *) malloc(sizeof(node));
+    if(fast == NULL) {
+        printf("ERROR\n");
+    }
+    node *slow = (node *) malloc(sizeof(node));
+    if(slow == NULL) {
+        printf("ERROR\n");
+    }
+    fast = head->next;
+    slow = head->next;
     if(fast == NULL) {
         return 0;
     }
@@ -90,8 +105,11 @@ int main()
 {
     char command;
     int val = 0;
-    node *head = (node*) malloc(sizeof(node));
-    head->data = NULL;
+    node *head = (node *) malloc(sizeof(node));
+    if(head == NULL) {
+        printf("ERROR");
+    }
+    head->data = -111222;
     head->next = NULL;
 
     while(1) {
@@ -105,7 +123,7 @@ int main()
 
         if(command == 'r') {
             scanf("%d", &val);
-            delet(val, head);
+            remove_from(val, head);
         }
 
         if(command == 'p') {
@@ -119,7 +137,8 @@ int main()
 
         if(command == 'c') {
             create_cycle(head);
-            int cycle = check_cycle(head);
+            int cycle = -1;
+            cycle = check_cycle(head);
             if(cycle == 1) {
                 printf("CYCLE WAS FOUND\n");
                 return 0;
@@ -128,7 +147,7 @@ int main()
                 printf("There are no cycles here\n");
             }
         }
-    }
 
+    }
     return 0;
 }
