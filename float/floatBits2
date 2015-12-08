@@ -30,10 +30,10 @@ int main()
     ans = floatBits2(f);
     int k = ans.e - 127;
     if(k >= 0) {
-        printf("(-1)^%d * 1.%d * 2^%d", ans.s, ans.m, ans.e - 127);
+        printf("(-1)^%d * 1.%d * 2^%d", ans.s, ans.m, k);
     }
     else {
-        printf("(-1)^%d * 1.%d * 2^(%d)", ans.s, ans.m, ans.e - 127);
+        printf("(-1)^%d * 1.%d * 2^(%d)", ans.s, ans.m, k);
     }
     return 0;
 }
