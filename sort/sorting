@@ -114,6 +114,34 @@ int main()
     quick_sort(0, n-1, a_qs);
     bubble_sort(n, a_bs);
 
+
+//    for (i = 0; i < 1000; i++) {
+//        warmup(i);
+//    }
+//    clock_t start = clock();
+//    //counting_sort(n, a_cs);
+//    clock_t finish = clock();
+//    clock_t time_cs = finish - start;
+//    printf("counting_sort: %.15f\n", (double)time_cs/CLOCKS_PER_SEC);
+//    for (i = 0; i < 1000; i++) {
+//        warmup(i);
+//    }
+//    start = clock();
+//    //quick_sort(0, n-1, a_qs);
+//    finish = clock();
+//    clock_t time_qs = finish - start;
+//    printf("quick_sort   : %.15f\n", (double)time_qs/CLOCKS_PER_SEC);
+//    for (i = 0; i < 1000; i++) {
+//        warmup(i);
+//    }
+//    start = clock();
+//    //bubble_sort(n, a_bs);
+//    finish = clock();
+//    clock_t time_bs = finish - start;
+//    printf("bubble_sort  : %.15f\n", (double)time_bs/CLOCKS_PER_SEC);
+
+
+
     printf("counting_sort: ");
     for(i = 0; i < n; ++i) {
         printf("%d ", a_cs[i]);
