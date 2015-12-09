@@ -47,22 +47,21 @@ void strcpy(char *dst, char *src) {
 
 typedef struct node {
     char str[MAXLENGTH];
-    int data;
+    int value;
     struct node *next;
 } node;
 
-void initialize_hash_table(node **hash_table, int *num, int *stats, int *val) {
+void initialize_hash_table(node **hash_table, int *num, int *stats) {
     int i = 0;
     for(i = 0; i < MAXN; ++i) {
 		num[i] = 0;
-		val[i] = 0;
 		node *tmp = (node *) malloc(sizeof(node));
 		if(tmp == NULL) {
 			printf("ERROR\n");
 	    }
 		hash_table[i] = tmp;
         hash_table[i]->next = NULL;
-		hash_table[i]->data = 0;
+		hash_table[i]->value = 0;
 		hash_table[i]->str[0] = '#';
     }
 	for(i = 0; i < STAT; ++i) {
@@ -81,7 +80,7 @@ int hash_code(char *s) {
     return code;
 }
 
-void set_into_table (char *s, node **hash_table, int *num, int *val) {
+void set_into_table (char *s, node **hash_table, int *num, int value) {
     int code_s = 0, ans = 0;
     code_s = hash_code(s);
     node *tmp = (node *) malloc(sizeof(node));
@@ -89,20 +88,18 @@ void set_into_table (char *s, node **hash_table, int *num, int *val) {
         printf("ERROR\n");
     }
 	if(hash_table[code_s]->next == NULL) {
-        tmp->data = 1;
+        tmp->value = value;
         tmp->next = NULL;
         strcpy(s, tmp->str);
         hash_table[code_s]->next = tmp;
 		num[code_s]++;
-		val[code_s]++;
     }
     else {
         tmp = hash_table[code_s]->next;
         while(1) {
             ans = strcmp(s, tmp->str);
             if(ans == 0) {
-                tmp->data++;
-				val[code_s]++;
+                tmp->value = value;
                 break;
             }
             else {
@@ -114,12 +111,11 @@ void set_into_table (char *s, node **hash_table, int *num, int *val) {
                     if(last == NULL) {
                         printf("ERROR\n");
                     }
-                    last->data = 1;
+                    last->value = value;
                     last->next = NULL;
                     strcpy(s, last->str);
 					tmp->next = last;
 					num[code_s]++;
-					val[code_s]++;
                     break;
                 }
             }
@@ -127,7 +123,7 @@ void set_into_table (char *s, node **hash_table, int *num, int *val) {
     }
 }
 
-void delete_from_table(char *s, node **hash_table, int *num, int *val) {
+void delete_from_table(char *s, node **hash_table, int *num) {
     int code_s = 0, ans = 0;
     code_s = hash_code(s);
     node *tmp = (node *) malloc(sizeof(node));
@@ -145,7 +141,6 @@ void delete_from_table(char *s, node **hash_table, int *num, int *val) {
 			last = tmp->next;
 			tmp->next = last->next;
 			num[code_s]--;
-			val[code_s] = val[code_s] - last->data;
 			free(last);
 			break;
 		}
@@ -162,11 +157,11 @@ void print_table(node **hash_table) {
     for(i = 0; i < MAXN; ++i) {
 		tmp = hash_table[i]->next;
         while(tmp != NULL) {
-            printf("%d ", tmp->data);
             n = mystrlen(tmp->str);
             for(j = 0; j < n; ++j) {
                 printf("%c", tmp->str[j]);
             }
+            printf(" %d", tmp->value);
             printf("\n");
             tmp = tmp->next;
         }
@@ -184,14 +179,14 @@ int get_element_from_table(char *s, node **hash_table) {
 	while(tmp != NULL) {
 		ans = strcmp(s, tmp->str);
 		if(ans == 0) {
-			return tmp->data;
+			return tmp->value;
 		}
 		tmp = tmp->next;
 	}
 	return -1;
 }
 
-void get_statistics(int *stats, int *num, int *val) {
+void get_statistics(int *stats, int *num) {
 	stats[0] = 0;	//stats[0] - количество непустых ячеек
 	stats[1] = 0;	//stats[1] - количество элементов
 	stats[2] = 0;	//stats[2] - средняя длина цепочки
@@ -201,9 +196,8 @@ void get_statistics(int *stats, int *num, int *val) {
 	for(i = 0; i < MAXN; ++i) {
 		if(num[i] != 0) {
 			stats[0]++;
-			stats[2] = stats[2] + num[i];
 		}
-		stats[1] = stats[1] + val[i];
+		stats[2] = stats[2] + num[i];
 		if(num[i] != 0 && num[i] < stats[3]) {
 			stats[3] = num[i];
 		}
@@ -211,6 +205,7 @@ void get_statistics(int *stats, int *num, int *val) {
 			stats[4] = num[i];
 		}
 	}
+	stats[1] = stats[2];
 	stats[2] = stats[2] / stats[0];
 	printf("Number of non-empty cells:           %d\n", stats[0]);
 	printf("Number of elements:                  %d\n", stats[1]);
@@ -219,31 +214,7 @@ void get_statistics(int *stats, int *num, int *val) {
 	printf("Maximum length of sequense:          %d\n", stats[4]);
 }
 
-//void count_strings(node **hash_table, int *num, int *stats, int *val) {
-//    int n = 0, i = 0;
-//    char a;
-//    char *s = (char *) malloc(sizeof(char) * MAXLENGTH);
-//    if(s == NULL) {
-//        printf("ERROR\n");
-//    }
-//    scanf("%d", &n);
-//    gets(s);
-//    for(i = 0; i < n; ++i) {
-//        scanf("%c", &a);
-//        gets(s);
-//        if(a == 's') {
-//            set_into_table(s, hash_table, num, val);
-//        }
-//        else if(a == 'd') {
-//            delete_from_table(s, hash_table, num, val);
-//        }
-//    }
-//    print_table(hash_table);
-//	printf("\n");
-//	get_statistics(stats, num, val);
-//}
-
-void clear_hash_table(node **hash_table, int *num, int *stats, int *val) {
+void clear_hash_table(node **hash_table, int *num, int *stats) {
     int i = 0;
     node *tmp = (node *) malloc(sizeof(node));
     if(tmp == NULL) {
@@ -264,7 +235,6 @@ void clear_hash_table(node **hash_table, int *num, int *stats, int *val) {
     free(hash_table);
 	free(num);
 	free(stats);
-	free(val);
 }
 
 int main()
@@ -281,17 +251,11 @@ int main()
 	if(num == NULL) {
 		printf("ERROR\n");
 	}
-	int *val = (int *) malloc(sizeof(int) * MAXN);
-	if(val == NULL) {
-		printf("ERROR\n");
-	}
 
-    initialize_hash_table(hash_table, num, stats, val);
+    initialize_hash_table(hash_table, num, stats);
 
 
 
-
-
-    clear_hash_table(hash_table, num, stats, val);
+    clear_hash_table(hash_table, num, stats);
     return 0;
 }
