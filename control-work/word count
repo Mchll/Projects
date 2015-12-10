@@ -1,0 +1,307 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define MAXLENGTH 100
+#define MAXN 123400
+#define STAT 10
+
+void warmup(int i) {
+    int x = 3;
+    int y = 33;
+    int z = x + y + i;
+}
+
+int mystrlen(char *str) {
+    int i = 0;
+    while(str[i]) {
+        i++;
+    }
+    return i;
+}
+
+int strcmp(char *s1, char *s2) {
+    int i = 0;
+    while(1) {
+        if(s1[i] == '\0' && s2[i] == '\0') {
+            return 0;
+        }
+        if(s1[i] == '\0') {
+            return -1;
+        }
+        if(s2[i] == '\0') {
+            return 1;
+        }
+        if(s1[i] > s2[i]) {
+            return 1;
+        }
+        if(s1[i] < s2[i]) {
+            return -1;
+        }
+        i++;
+    }
+}
+
+void strcpy(char *dst, char *src) {
+    int i = 0;
+    while(1) {
+        src[i] = dst[i];
+        if(dst[i] == '\0') {
+            break;
+        }
+        i++;
+    }
+}
+
+typedef struct node {
+    char str[MAXLENGTH];
+    int data;
+    struct node *next;
+} node;
+
+void initialize_hash_table(node **hash_table, int *num, int *stats, int *val) {
+    int i = 0;
+    for(i = 0; i < MAXN; ++i) {
+		num[i] = 0;
+		val[i] = 0;
+		node *tmp = (node *) malloc(sizeof(node));
+		if(tmp == NULL) {
+			printf("ERROR\n");
+	    }
+		hash_table[i] = tmp;
+        hash_table[i]->next = NULL;
+		hash_table[i]->data = 0;
+		hash_table[i]->str[0] = '#';
+    }
+	for(i = 0; i < STAT; ++i) {
+		stats[i] = 0;
+	}
+}
+
+int hash_code(char *s) {
+    int i = 0, j = 1, code_symbol = 1, code = 0;
+    int s_length = mystrlen(s);
+    for(i = 0; i < s_length; ++i) {
+        j = (j * 31) % MAXN;
+        code_symbol = ((int)(s[i]) * j) % MAXN;
+        code = (code + code_symbol) % MAXN;
+    }
+    return code;
+
+//    int code = 0, i = 0;
+//    int s_length = mystrlen(s);
+//    for(i = 0; i < s_length; ++i) {
+//        code = (code + (int)(s[i])) % MAXN;
+//    }
+//    return code;
+//    int code = 5;
+//    return code;
+}
+
+void set_into_table (char *s, node **hash_table, int *num, int *val) {
+    int code_s = 0, ans = 0;
+    code_s = hash_code(s);
+    node *tmp = (node *) malloc(sizeof(node));
+    if(tmp == NULL) {
+        printf("ERROR\n");
+    }
+	if(hash_table[code_s]->next == NULL) {
+        tmp->data = 1;
+        tmp->next = NULL;
+        strcpy(s, tmp->str);
+        hash_table[code_s]->next = tmp;
+		num[code_s]++;
+		val[code_s]++;
+    }
+    else {
+        tmp = hash_table[code_s]->next;
+        while(1) {
+            ans = strcmp(s, tmp->str);
+            if(ans == 0) {
+                tmp->data++;
+				val[code_s]++;
+                break;
+            }
+            else {
+                if(tmp->next != NULL) {
+                    tmp = tmp->next;
+                }
+                else {
+                    node *last = (node *) malloc(sizeof(node));
+                    if(last == NULL) {
+                        printf("ERROR\n");
+                    }
+                    last->data = 1;
+                    last->next = NULL;
+                    strcpy(s, last->str);
+					tmp->next = last;
+					num[code_s]++;
+					val[code_s]++;
+                    break;
+                }
+            }
+        }
+    }
+}
+
+void print_table(node **hash_table) {
+    int i = 0, j = 0, n = 0;
+    node *tmp = (node *) malloc(sizeof(node));
+    if(tmp == NULL) {
+        printf("ERROR\n");
+    }
+    for(i = 0; i < MAXN; ++i) {
+		tmp = hash_table[i]->next;
+        while(tmp != NULL) {
+            printf("%d ", tmp->data);
+            n = mystrlen(tmp->str);
+            for(j = 0; j < n; ++j) {
+                printf("%c", tmp->str[j]);
+            }
+            printf("\n");
+            tmp = tmp->next;
+        }
+    }
+}
+
+void get_statistics(int *stats, int *num, int *val) {
+	stats[0] = 0;	//stats[0] - количество непустых ячеек
+	stats[1] = 0;	//stats[1] - количество элементов
+	stats[2] = 0;	//stats[2] - средняя длина цепочки
+	stats[3] = MAXN;	//stats[3] - минимальная ненулевая длина цепочки
+	stats[4] = -1;	//stats[4] - максимальная длина цепочки
+	int i = 0;
+	for(i = 0; i < MAXN; ++i) {
+		if(num[i] != 0) {
+			stats[0]++;
+			stats[2] = stats[2] + num[i];
+		}
+		stats[1] = stats[1] + val[i];
+		if(num[i] != 0 && num[i] < stats[3]) {
+			stats[3] = num[i];
+		}
+		if(num[i] > stats[4]) {
+			stats[4] = num[i];
+		}
+	}
+	if(stats[0] != 0) {
+		stats[2] = stats[2] / stats[0];
+	}
+	if(stats[3] == MAXN) {
+		stats[3] = 0;
+	}
+	printf("Number of non-empty cells:           %d\n", stats[0]);
+	printf("Number of elements:                  %d\n", stats[1]);
+	printf("Average length of sequence:          %d\n", stats[2]);
+	printf("Minimum non-zero length of sequense: %d\n", stats[3]);
+	printf("Maximum length of sequense:          %d\n", stats[4]);
+}
+
+void count_strings(node **hash_table, int *num, int *stats, int *val) {
+    int i = 0, n = 0, j = 0;
+    char *s = (char *) malloc(sizeof(char) * MAXLENGTH);
+    if(s == NULL) {
+        printf("ERROR\n");
+    }
+    char *t = (char *) malloc(sizeof(char) * MAXLENGTH);
+    if(t == NULL) {
+        printf("ERROR\n");
+    }
+    for (i = 0; i < 1000; i++) {
+        warmup(i);
+    }
+
+    //clock_t start = clock();
+
+    FILE * input;
+    input = fopen("input.txt", "r");
+    if(input == NULL) {
+        printf("CAN'T OPEN input.txt\n");
+    }
+    while(fscanf(input, "%s", t) != EOF) {
+        j = 0;
+        n = mystrlen(t);
+        for(i = 0; i < n; ++i) {
+            if(t[i] >= 'A' && t[i] <= 'Z') {
+                t[i] = (char)((int)(t[i]) - (int)('A') + (int)('a'));
+            }
+            if((t[i] >= 'a' && t[i] <= 'z') || (t[i] == '-' && n != 1) || (t[i] >= '0' && t[i] <= '9') || (t[i] == '—' && n != 1)) {
+                s[j] = t[i];
+                ++j;
+            }
+        }
+        s[j] = '\0';
+        if(s[0] != '\0') {
+            set_into_table (s, hash_table, num, val);
+        }
+    }
+
+    //clock_t finish = clock();
+    //clock_t time_cs = finish - start;
+
+    print_table(hash_table);
+	printf("\n");
+	get_statistics(stats, num, val);
+	printf("\n");
+
+	//printf("WHAT TIME IS NOW %.15f\n", (double)time_cs/CLOCKS_PER_SEC);
+}
+
+void clear_hash_table(node **hash_table, int *num, int *stats, int *val) {
+    int i = 0;
+    node *tmp = (node *) malloc(sizeof(node));
+    if(tmp == NULL) {
+        printf("ERROR\n");
+    }
+    node *tmpnext = (node *) malloc(sizeof(node));
+    if(tmpnext == NULL) {
+        printf("ERROR\n");
+    }
+    for(i = 0; i < MAXN; ++i) {
+        tmp = hash_table[i];
+        while(tmp != NULL) {
+            tmpnext = tmp->next;
+            free(tmp);
+            tmp = tmpnext;
+        }
+    }
+    free(hash_table);
+	free(num);
+	free(stats);
+	free(val);
+}
+
+int main()
+{
+    node **hash_table = (node **) malloc(sizeof(node) * MAXN);
+    if(hash_table == NULL) {
+        printf("ERROR\n");
+    }
+	int *stats = (int *) malloc(sizeof(int) * STAT);
+	if(stats == NULL) {
+		printf("ERROR\n");
+	}
+	int *num = (int *) malloc(sizeof(int) * MAXN);
+	if(num == NULL) {
+		printf("ERROR\n");
+	}
+	int *val = (int *) malloc(sizeof(int) * MAXN);
+	if(val == NULL) {
+		printf("ERROR\n");
+	}
+
+    initialize_hash_table(hash_table, num, stats, val);
+
+
+    count_strings(hash_table, num, stats, val);
+
+
+    clear_hash_table(hash_table, num, stats, val);
+    return 0;
+}
+//                                                 optimal                  sum of codes                  const
+//Number of non-empty cells:                        4928                        868                         1
+//Number of elements:                              47480                       47480                      47480
+//Average length of sequence:                         1                          5                         5039
+//Minimum non-zero length of sequense:                1                          1                         5039
+//Maximum length of sequense:                         3                          28                        5039
+//Time:                                       0.056000000000000           0.067000000000000          1.941000000000000
