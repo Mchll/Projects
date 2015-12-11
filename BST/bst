@@ -3,7 +3,6 @@
 
 typedef struct node {
     int data;
-    int number;
     struct node *left;
     struct node *right;
     struct node *parent;
@@ -11,37 +10,36 @@ typedef struct node {
 
 void create_BST(node *head) {
     head->data = -2147483647;
-    head->number = 0;
     head->left = NULL;
     head->right = NULL;
     head->parent = NULL;
 }
 
 void clear_BST(node *head) {
-    if(head->left != NULL) {
+    if (head->left != NULL) {
         clear_BST(head->left);
     }
-    if(head->right != NULL) {
+    if (head->right != NULL) {
         clear_BST(head->right);
     }
     free(head);
 }
 
 void add_element(int data, node *head) {
-    if(data == head->data) {
-        head->number++;
+    if (data == head->data) {
+        return;
     }
-    else if(data > head->data) {
-        if(head->right == NULL) {
+    else if (data > head->data) {
+        if (head->right == NULL) {
             node *tmp = (node*) malloc(sizeof(node));
-            if(tmp == NULL) {
+            if (tmp == NULL) {
                 printf("ERROR\n");
+                return;
             }
             head->right = tmp;
             tmp->left = NULL;
             tmp->right = NULL;
             tmp->data = data;
-            tmp->number = 1;
             tmp->parent = head;
         }
         else {
@@ -49,16 +47,16 @@ void add_element(int data, node *head) {
         }
     }
     else {
-        if(head->left == NULL) {
+        if (head->left == NULL) {
             node *tmp = (node*) malloc(sizeof(node));
-            if(tmp == NULL) {
+            if (tmp == NULL) {
                 printf("ERROR\n");
+                return;
             }
             head->left = tmp;
             tmp->left = NULL;
             tmp->right = NULL;
             tmp->data = data;
-            tmp->number = 1;
             tmp->parent = head;
         }
         else {
@@ -68,19 +66,19 @@ void add_element(int data, node *head) {
 }
 
 void delete_element(int data, node *head) {
-    if(data > head->data) {
-            if(head->right != NULL) {
+    if (data > head->data) {
+            if (head->right != NULL) {
                 delete_element(data, head->right);
             }
     }
-    else if(data < head->data) {
-        if(head->left != NULL) {
+    else if (data < head->data) {
+        if (head->left != NULL) {
                 delete_element(data, head->left);
             }
     }
     else {
-        if(head->left == NULL && head->right == NULL) {
-            if((head->parent)->left == head) {
+        if (head->left == NULL && head->right == NULL) {
+            if ((head->parent)->left == head) {
                 (head->parent)->left = NULL;
             }
             else {
@@ -88,8 +86,8 @@ void delete_element(int data, node *head) {
             }
             free(head);
         }
-        else if(head->left == NULL) {
-            if((head->parent)->left == head) {
+        else if (head->left == NULL) {
+            if ((head->parent)->left == head) {
                 (head->parent)->left = head->right;
             }
             else {
@@ -97,8 +95,8 @@ void delete_element(int data, node *head) {
             }
             free(head);
         }
-        else if(head->right == NULL) {
-            if((head->parent)->left == head) {
+        else if (head->right == NULL) {
+            if ((head->parent)->left == head) {
                 (head->parent)->left = head->left;
             }
             else {
@@ -107,16 +105,11 @@ void delete_element(int data, node *head) {
             free(head);
         }
         else {
-            node *tmp = (node*) malloc(sizeof(node));
-            if(tmp == NULL) {
-                printf("ERROR\n");
-            }
-            tmp = head->right;
+            node *tmp = head->right;
             while(tmp->left != NULL) {
                 tmp = tmp->left;
             }
             head->data = tmp->data;
-            head->number = tmp->number;
             delete_element(tmp->data, tmp);
         }
     }
@@ -124,13 +117,13 @@ void delete_element(int data, node *head) {
 
 int check_data(int data, node *head) {
     while(1) {
-        if(head->data == data) {
+        if (head->data == data) {
             return 1;
         }
-        if((data > head->data && head->right == NULL) || (data < head->data && head->left == NULL)) {
+        if ((data > head->data && head->right == NULL) || (data < head->data && head->left == NULL)) {
             return 0;
         }
-        if(data > head->data) {
+        if (data > head->data) {
             head = head->right;
         }
         else {
@@ -140,40 +133,40 @@ int check_data(int data, node *head) {
 }
 
 void print_increasing(node *head) {
-    if(head->left != NULL) {
+    if (head->left != NULL) {
         print_increasing(head->left);
     }
-    if(head->data != -2147483647) {
+    if (head->data != -2147483647) {
         printf("%d ", head->data);
     }
-    if(head->right != NULL) {
+    if (head->right != NULL) {
         print_increasing(head->right);
     }
 }
 
 void print_decreasing(node *head) {
-    if(head->right != NULL) {
+    if (head->right != NULL) {
         print_decreasing(head->right);
     }
-    if(head->data != -2147483647) {
+    if (head->data != -2147483647) {
         printf("%d ", head->data);
     }
-    if(head->left != NULL) {
+    if (head->left != NULL) {
         print_decreasing(head->left);
     }
 }
 
 void print_BST(node *head) {
-    if(head->data != -2147483647) {
+    if (head->data != -2147483647) {
         printf("(%d ", head->data);
-        if(head->left == NULL) {
+        if (head->left == NULL) {
             printf("null");
         }
         else {
             print_BST(head->left);
         }
         printf(" ");
-        if(head->right == NULL) {
+        if (head->right == NULL) {
             printf("null)");
         }
         else {
@@ -191,6 +184,7 @@ int main()
     node *head = (node*) malloc(sizeof(node));
     if(head == NULL) {
         printf("ERROR\n");
+        return 0;
     }
     create_BST(head);
 
