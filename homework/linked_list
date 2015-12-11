@@ -7,40 +7,25 @@ typedef struct node {
     struct node *next;
 } node;
 
-node* getLast(node *head) {
-    while (head->next != NULL) {
-        head = head->next;
-    }
-    return head;
-}
-
 void add(int val, node *head) {
-    node *last = (node *) malloc(sizeof(node));
-    if(last == NULL) {
-        printf("ERROR\n");
-    }
     node *tmp = (node *) malloc(sizeof(node));
     if(tmp == NULL) {
         printf("ERROR\n");
+        return;
     }
-    last = getLast(head);
     tmp->data = val;
-    tmp->next = NULL;
-    last->next = tmp;
+    tmp->next = head->next;
+    head->next = tmp;
 }
 
 void remove_from(int val, node *head) {
-    node *tmp = (node *) malloc(sizeof(node));
-    if(tmp == NULL) {
-        printf("ERROR\n");
-    }
     while(head->next != NULL) {
         if(head->next->data == val) {
             break;
         }
         head = head->next;
     }
-    tmp = head->next;
+    node *tmp = head->next;
     head->next = tmp->next;
     free(tmp);
 }
@@ -54,7 +39,7 @@ void print(node *head) {
     printf("\n");
 }
 
-void quit(node *head) {
+void clean(node *head) {
     while(head) {
         node *tmp = head->next;
         free(head);
@@ -69,6 +54,7 @@ int main()
     node *head = (node *) malloc(sizeof(node));
     if(head == NULL) {
         printf("ERROR");
+        return 0;
     }
     head->data = -111222;
     head->next = NULL;
@@ -92,7 +78,7 @@ int main()
         }
 
         if(command == 'q') {
-            quit(head);
+            clean(head);
             break;
         }
 
