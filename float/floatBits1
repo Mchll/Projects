@@ -20,15 +20,15 @@ void floatBits1 () {
     if(f2 == 0) {
         if(f1 == 0) {
             printf("NaN\n");
-            return 0;
+            return;
         }
         else if(f1 > 0) {
             printf("+inf\n");
-            return 0;
+            return;
         }
         else if(f1 < 0) {
             printf("-inf\n");
-            return 0;
+            return;
         }
     }
     f = ((double)(f1) / f2);
