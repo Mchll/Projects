@@ -1,0 +1,120 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define FLENGTH 100000
+#define SLENGTH 100
+#define TLENGTH 100000
+
+void task_1 () {
+    int i = 0;
+    char a;
+    char *s = (char *) malloc(sizeof(char) * FLENGTH);
+    if(s == NULL) {
+        printf("ERROR\n");
+    }
+    scanf("%c", &a);
+    gets(s);
+    i = 0;
+    while(s[i] != '\0') {
+        if(s[i] != a) {
+            printf("%c", s[i]);
+        }
+        i++;
+    }
+    printf("\n");
+}
+
+void task_2() {
+    int first_symbol_1 = 0, first_symbol_2 = 0, i = 0;
+    char *num1 = (char *) malloc(sizeof(char) * SLENGTH);
+    if(num1 == NULL) {
+        printf("ERROR\n");
+    }
+    char *num2 = (char *) malloc(sizeof(char) * SLENGTH);
+    if(num2 == NULL) {
+        printf("ERROR\n");
+    }
+    gets(num1);
+    gets(num2);
+    i = 0;
+    while(1) {
+        if(num1[i] == '\0') {
+            break;
+        }
+        if(num1[i] == '1') {
+            first_symbol_1 = i;
+        }
+        i++;
+    }
+    i = 0;
+    while(1) {
+        if(num2[i] == '\0') {
+            break;
+        }
+        if(num2[i] == '1') {
+            first_symbol_2 = i;
+        }
+        i++;
+    }
+    if(first_symbol_1 > first_symbol_2) {
+        printf("1");
+    }
+    else if(first_symbol_1 < first_symbol_2) {
+        printf("-1");
+    }
+    else {
+        for(i = first_symbol_1; i >= 0; --i) {
+            if(num1[i] > num2[i]) {
+                printf("1");
+                break;
+            }
+            if(num1[i] < num2[i]) {
+                printf("-1");
+                break;
+            }
+            if(i == 0) {
+                printf("0");
+                break;
+            }
+        }
+    }
+}
+
+void task_3() {
+    int i = 0, counter = 0;
+    char *s = (char *) malloc(sizeof(char) * TLENGTH);
+    if(s == NULL) {
+        printf("ERROR\n");
+    }
+    FILE * input;
+    input = fopen("input.txt", "r");
+    if(input == NULL) {
+        printf("CAN'T OPEN input.txt\n");
+    }
+    while(fgets(s, TLENGTH, input) != NULL) {
+        i = 0;
+        counter = 0;
+        while(s[i] != '\0') {
+            if(counter == 2) {
+                printf("%c", s[i]);
+            }
+            else if(s[i] == '/') {
+                counter++;
+            }
+            i++;
+        }
+        if(counter == 2) {
+            printf("\n");
+        }
+    }
+    if(fclose(input) == EOF) {
+		printf("CAN'T CLOSE input.txt\n");
+	}
+}
+
+int main()
+{
+    
+
+    return 0;
+}
