@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 union data {
     struct {
         unsigned int m : 23;
@@ -8,49 +9,55 @@ union data {
     } field;
     float f;
 };
+
 struct answer {
     unsigned int s;
     unsigned int m;
     unsigned int e;
 };
-void floatBits2 () {
+
+void print_mantiss (int m) {
+    int i = 0;
+    for(i = 22; i >= 0; --i) {
+        printf("%d", (m >> i) & 1);
+    }
+}
+
+void print (struct answer ans) {
+    if(ans.e  == 255) {
+        if(ans.s == 0 && ans.m == 0) {
+            printf("+inf");
+        }
+        else if(ans.s % 2 == 1 && ans.m == 0) {
+            printf("-inf");
+        }
+        else printf("NaN");
+    }
+    else {
+        printf("(-1)^(%d) * 1.", ans.s);
+        print_mantiss(ans.m);
+        printf(" * 2^(%d - 127)\n", ans.e);
+    }
+}
+
+void floatBits2 (float f) {
     union data fl;
+    fl.f = f;
+    struct answer ans;
+    ans.s = fl.field.s;
+    ans.e = fl.field.e;
+    ans.m = fl.field.m;
+    print(ans);
+}
+
+int main()
+{
     float f = 0;
     int f1 = 0, f2 = 0;
     scanf("%d", &f1);
     scanf("%d", &f2);
-    if(f2 == 0) {
-        if(f1 == 0) {
-            printf("NaN\n");
-            return;
-        }
-        else if(f1 > 0) {
-            printf("+inf\n");
-            return;
-        }
-        else if(f1 < 0) {
-            printf("-inf\n");
-            return;
-        }
-    }
     f = ((double)(f1) / f2);
+    floatBits2(f);
 
-    fl.f = f;
-    struct answer ans1;
-    ans1.s = fl.field.s;
-    ans1.e = fl.field.e;
-    ans1.m = fl.field.m;
-
-    int k = ans1.e - 127;
-    if(k >= 0) {
-        printf("(-1)^%d * 1.%d * 2^%d", ans1.s, ans1.m, k);
-    }
-    else {
-        printf("(-1)^%d * 1.%d * 2^(%d)", ans1.s, ans1.m, k);
-    }
-};
-int main()
-{
-    
     return 0;
 }
