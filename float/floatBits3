@@ -18,7 +18,24 @@ struct answer floatBits3 (float f) {
 int main()
 {
     float f = 0;
-    scanf("%f", &f);
+    int f1 = 0, f2 = 0;
+    scanf("%d", &f1);
+    scanf("%d", &f2);
+    if(f2 == 0) {
+        if(f1 == 0) {
+            printf("NaN\n");
+            return 0;
+        }
+        else if(f1 > 0) {
+            printf("+inf\n");
+            return 0;
+        }
+        else if(f1 < 0) {
+            printf("-inf\n");
+            return 0;
+        }
+    }
+    f = ((double)(f1) / f2);
     ans = floatBits3(f);
     int k = ans.e - 127;
     if(k >= 0) {
