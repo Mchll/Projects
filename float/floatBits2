@@ -15,16 +15,7 @@ struct answer {
     unsigned int e;
 };
 struct answer ans;
-struct answer floatBits2 (float f) {
-    fl.f = f;
-    struct answer ans1;
-    ans1.s = fl.field.s;
-    ans1.e = fl.field.e;
-    ans1.m = fl.field.m;
-    return ans1;
-};
-int main()
-{
+void floatBits2 () {
     float f = 0;
     int f1 = 0, f2 = 0;
     scanf("%d", &f1);
@@ -32,25 +23,35 @@ int main()
     if(f2 == 0) {
         if(f1 == 0) {
             printf("NaN\n");
-            return 0;
+            return;
         }
         else if(f1 > 0) {
             printf("+inf\n");
-            return 0;
+            return;
         }
         else if(f1 < 0) {
             printf("-inf\n");
-            return 0;
+            return;
         }
     }
     f = ((double)(f1) / f2);
-    ans = floatBits2(f);
-    int k = ans.e - 127;
+
+    fl.f = f;
+    struct answer ans1;
+    ans1.s = fl.field.s;
+    ans1.e = fl.field.e;
+    ans1.m = fl.field.m;
+
+    int k = ans1.e - 127;
     if(k >= 0) {
-        printf("(-1)^%d * 1.%d * 2^%d", ans.s, ans.m, k);
+        printf("(-1)^%d * 1.%d * 2^%d", ans1.s, ans1.m, k);
     }
     else {
-        printf("(-1)^%d * 1.%d * 2^(%d)", ans.s, ans.m, k);
+        printf("(-1)^%d * 1.%d * 2^(%d)", ans1.s, ans1.m, k);
     }
+};
+int main()
+{
+    
     return 0;
 }
