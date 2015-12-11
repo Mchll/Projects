@@ -237,7 +237,10 @@ void count_strings(node **hash_table, int *num, int *stats, int *val) {
 
     //clock_t finish = clock();
     //clock_t time_cs = finish - start;
-
+	
+	if(fclose(input)) {
+		printf("Ошибка при закрытии файла.\n");
+	}
     print_table(hash_table);
 	printf("\n");
 	get_statistics(stats, num, val);
