@@ -67,12 +67,10 @@ void task_2() {
             if(num1[i] > num2[i]) {
                 printf("1");
                 break;
-            }
-            if(num1[i] < num2[i]) {
+            } else if(num1[i] < num2[i]) {
                 printf("-1");
                 break;
-            }
-            if(i == 0) {
+            } else if(i == 0) {
                 printf("0");
                 break;
             }
