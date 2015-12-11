@@ -8,14 +8,13 @@ union data {
     } field;
     float f;
 };
-union data fl;
 struct answer {
     unsigned int s;
     unsigned int m;
     unsigned int e;
 };
-struct answer ans;
 void floatBits2 () {
+    union data fl;
     float f = 0;
     int f1 = 0, f2 = 0;
     scanf("%d", &f1);
