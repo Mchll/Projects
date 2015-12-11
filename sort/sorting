@@ -12,8 +12,8 @@ void counting_sort(int n, int *a_cs) {
     int i = 0, maxi = 0, j = 0;
     int *arr = (int *) malloc (MAXLENGTH * sizeof(int));
     if(arr == NULL) {
-        printf("ERROR");
-        return 0;
+        printf("ERROR\n");
+        return;
     }
     for(i = 0; i < MAXLENGTH; ++i) {
         arr[i] = 0;
@@ -32,9 +32,7 @@ void counting_sort(int n, int *a_cs) {
             ++j;
         }
     }
-    for(i = 0; i < MAXLENGTH; ++i) {
-        free(arr[i]);
-    }
+
     free(arr);
 }
 
@@ -84,22 +82,28 @@ int main()
     scanf("%d", &n);
     int *a_cs = (int *) malloc (n * sizeof(int));
     if(a_cs == NULL) {
-        printf("ERROR");
+        printf("ERROR\n");
         return 0;
     }
     int *a_qs = (int *) malloc (n * sizeof(int));
     if(a_qs == NULL) {
-        printf("ERROR");
+        printf("ERROR\n");
+        free(a_cs);
         return 0;
     }
     int *a_bs = (int *) malloc (n * sizeof(int));
     if(a_bs == NULL) {
-        printf("ERROR");
+        printf("ERROR\n");
+        free(a_cs);
+        free(a_qs);
         return 0;
     }
     int *a = (int *) malloc (n * sizeof(int));
     if(a == NULL) {
-        printf("ERROR");
+        printf("ERROR\n");
+        free(a_cs);
+        free(a_qs);
+        free(a_bs);
         return 0;
     }
     for(i = 0; i < n; ++i) {
@@ -163,7 +167,7 @@ int main()
     free(a_qs);
     free(a_bs);
     free(a);
-    
+
     return 0;
 }
 
