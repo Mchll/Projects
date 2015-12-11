@@ -5,18 +5,8 @@ struct answer {
     unsigned int m;
     unsigned int e;
 };
-struct answer ans;
-struct answer floatBits3 (float f) {
+void floatBits3 () {
     int mask_sign = 0x00000001, mask_exponent = 0x000000FF, mask_mantiss = 0x007FFFFF;
-    int *pointer = (int *) (&f);
-    struct answer ans1;
-    ans1.s = (*pointer >> 31) & mask_sign;
-    ans1.e = (*pointer >> 23) & mask_exponent;
-    ans1.m = (*pointer & mask_mantiss);
-    return ans1;
-};
-int main()
-{
     float f = 0;
     int f1 = 0, f2 = 0;
     scanf("%d", &f1);
@@ -24,25 +14,33 @@ int main()
     if(f2 == 0) {
         if(f1 == 0) {
             printf("NaN\n");
-            return 0;
+            return;
         }
         else if(f1 > 0) {
             printf("+inf\n");
-            return 0;
+            return;
         }
         else if(f1 < 0) {
             printf("-inf\n");
-            return 0;
+            return;
         }
     }
     f = ((double)(f1) / f2);
-    ans = floatBits3(f);
-    int k = ans.e - 127;
+    int *pointer = (int *) (&f);
+    struct answer ans1;
+    ans1.s = (*pointer >> 31) & mask_sign;
+    ans1.e = (*pointer >> 23) & mask_exponent;
+    ans1.m = (*pointer & mask_mantiss);
+    int k = ans1.e - 127;
     if(k >= 0) {
-        printf("(-1)^%d * 1.%d * 2^%d", ans.s, ans.m, k);
+        printf("(-1)^%d * 1.%d * 2^%d", ans1.s, ans1.m, k);
     }
     else {
-        printf("(-1)^%d * 1.%d * 2^(%d)", ans.s, ans.m, k);
+        printf("(-1)^%d * 1.%d * 2^(%d)", ans1.s, ans1.m, k);
     }
+};
+int main()
+{
+    
     return 0;
 }
