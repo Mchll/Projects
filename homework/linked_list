@@ -11,8 +11,7 @@ void add(int val, node *head) {
     node *tmp = (node *) malloc(sizeof(node));
     if(tmp == NULL) {
         printf("ERROR\n");
-        clean(head);
-        exit(-1);
+        return;
     }
     tmp->data = val;
     tmp->next = head->next;
