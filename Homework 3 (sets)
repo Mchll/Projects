@@ -1,0 +1,54 @@
+type Set = Int => Boolean
+
+def contains(s : Set, elem : Int) : Boolean = s(elem)
+
+def singletonSet(elem: Int) : Set = {
+  (n : Int) => n == elem
+}
+
+def union(s: Set, t: Set): Set = {
+  (n : Int) => contains (s, n) || contains (t, n)
+}
+
+def intersect(s: Set, t: Set): Set = {
+  (n : Int) => contains (s, n) && contains (t, n)
+}
+
+def diff(s: Set, t: Set): Set = {
+  (n : Int) => !contains (s, n) && contains (t, n)
+}
+
+def filter(s: Set, p: Int => Boolean): Set = {
+  (n : Int) => contains (s, n) && p(n)
+}
+val bound = 1000
+
+def forall(s: Set, p: Int => Boolean): Boolean = {
+  def iter(a : Int) : Boolean = {
+    if (a > bound) true
+    else if (contains (s, a) && !p(a)) false
+    else iter (a + 1)
+  }
+  iter (-bound)
+}
+
+def exists(s: Set, p: Int => Boolean): Boolean = {
+  def iter(a : Int) : Boolean = {
+    if (a > bound) false
+    else if (contains (s, a) && p(a)) true
+    else iter (a + 1)
+  }
+  iter (-bound)
+}
+
+def map(s : Set, f : Int => Int) : Set = {
+  def empty = {
+    (n : Int) => false
+  }
+  def iter(a : Int) : Set = {
+    if (a > bound) empty
+    else if (contains (s, a)) union (singletonSet (f(a)), iter (a + 1))
+    else iter (a + 1)
+  }
+  iter (-bound)
+}
