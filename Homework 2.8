@@ -1,0 +1,11 @@
+def list_sum(lis : List[Int]) : Int = {
+  def loop(lis : List[Int], ans : Int) : Int = {
+    if(lis.isEmpty) {
+      ans
+    }
+    else {
+      loop(lis.tail, ans + lis.head)
+    }
+  }
+  loop(lis, 0)
+}
