@@ -1,0 +1,13 @@
+def filter(lis : List[Int]) : List[Int] = {
+  if(lis.isEmpty) {
+    List()
+  }
+  else {
+    if(lis.head % 10 == 0) {
+      lis.head :: filter(lis.tail)
+    }
+    else {
+      filter(lis.tail)
+    }
+  }
+}
