@@ -1,0 +1,11 @@
+def list_length(lis : List[Int]) : Int = {
+  def loop(lis : List[Int], ans : Int) : Int = {
+    if(lis.isEmpty) {
+      ans
+    }
+    else {
+      loop(lis.tail, ans + 1)
+    }
+  }
+  loop(lis, 0)
+}
