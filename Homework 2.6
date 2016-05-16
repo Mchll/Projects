@@ -1,0 +1,8 @@
+def push_back(lis : List[Int], num : Int) : List[Int] = {
+  if(lis.isEmpty) {
+    List(num)
+  }
+  else {
+    lis.head :: push_back(lis.tail, num)
+  }
+}
