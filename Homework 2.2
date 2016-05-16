@@ -1,0 +1,21 @@
+def balance (chars: List[Char]): Boolean = {
+  var data = 0
+  var ans = true
+  var l = chars
+  while (l.nonEmpty) {
+    if (l.head == '(') {
+      data += 1
+    }
+    else {
+      data -= 1
+    }
+    if (data < 0) {
+      ans = false
+    }
+    l = l.tail
+  }
+  if (data != 0) {
+    ans = false
+  }
+  ans
+}
