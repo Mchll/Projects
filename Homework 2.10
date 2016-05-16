@@ -1,0 +1,22 @@
+def fun(n : Int) : Boolean = {
+  if(n % 10 == 0) {
+    true
+  }
+  else {
+    false
+  }
+}
+
+def filter(lis : List[Int], fun : Int => Boolean) : List[Int] = {
+  if(lis.isEmpty) {
+    List()
+  }
+  else {
+    if(fun(lis.head)) {
+      lis.head :: filter(lis.tail, fun)
+    }
+    else {
+      filter(lis.tail, fun)
+    }
+  }
+}
