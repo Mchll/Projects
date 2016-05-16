@@ -1,0 +1,11 @@
+def reverse_list(lis : List[Int]) : List[Int] = {
+  def loop(lis : List[Int], ans : List[Int]) : List[Int] = {
+    if (lis.isEmpty) {
+      ans
+    }
+    else {
+      loop(lis.tail, lis.head :: ans)
+    }
+  }
+  loop(lis, List())
+}
