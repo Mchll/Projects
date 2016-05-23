@@ -1,0 +1,81 @@
+ldc 10001
+st 0
+ldc 0
+st 3
+ldc 2
+st 5
+ldc -11
+opt: st 8
+ldc 0
+st 4
+ldc 1
+st 1
+ldc -11
+div: st 8
+ld 5
+st 2
+ldc 0
+st 7
+ldc -11
+sg: st 8
+ldc -1
+ld 1
+ld 2
+cmp
+add
+ldc 1
+add
+ldc 0
+cmp
+ldc -1
+cmp
+br eff
+ld 1
+ld 2
+sub
+st 2
+jmp sg
+eff: st 8
+ld 2
+st 7
+ld 7
+ld 1
+cmp
+br ex
+ld 4
+ldc 1
+add
+st 4
+ex: st 8
+ld 1
+ldc 1
+add
+st 1
+ld 1
+ld 5
+cmp
+br div
+st 8
+ld 4
+ldc 1
+cmp
+ld 5
+ldc 1
+add
+st 5
+br opt
+st 8
+ld 3
+ldc 1
+add
+st 3
+ld 3
+ld 0
+cmp
+br opt
+st 8
+ld 5
+ldc -1
+add
+st 9 ; this is answer
+ret
