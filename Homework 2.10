@@ -1,10 +1,5 @@
 def fun(n : Int) : Boolean = {
-  if(n % 10 == 0) {
-    true
-  }
-  else {
-    false
-  }
+  n % 10 == 0
 }
 
 def filter(lis : List[Int], fun : Int => Boolean) : List[Int] = {
