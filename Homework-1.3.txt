@@ -77,5 +77,6 @@ st 8
 ld 5
 ldc -1
 add
-st 9 ; this is answer
+st 9
+ld 9
 ret
