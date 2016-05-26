@@ -154,11 +154,10 @@ void perform (instruction * code, int j, int * my_stack, int * data, label * hea
         printf("THERE ARE ERRORS IN THIS CODE");
 	}
 
-//    int k = 0;
-//	for(k = 0; k < st; ++k) {
-//        printf("%d", my_stack[k]);
-//	}
-//    printf("%d", data[3]);
+    int k = 0;
+	for(k = 0; k < st; ++k) {
+        printf("%d", my_stack[k]);
+	}
 }
 
 void add_instruction (char * s, int num, instruction * code, int j, char * lbl) {
