@@ -39,5 +39,5 @@ ld 3
 st 1
 ld 3
 st 2
-ld 3 ; this is answer
+ld 3
 ret
