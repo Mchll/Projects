@@ -5,17 +5,6 @@ import java.awt.image.BufferedImage
 
 package object Blur {
 
-  class Colour(){
-    var red : Int = 0
-    var green : Int = 0
-    var blue : Int = 0
-    var alpha : Int = 0
-    def setRed(newRed : Int) = {red = newRed}
-    def setGreen(newGreen : Int) = {green = newGreen}
-    def setBlue(newBlue : Int) = {blue = newBlue}
-    def setAlpha(newAlpha : Int) = {alpha = newAlpha}
-  }
-
   def Red(byte : Int) : Int = {
     val mask = 0x000000FF
     byte >>> 24 & mask
