@@ -1,0 +1,11 @@
+Here you can write a number of points that you want: 
+100000
+Here you can write range that you want: 
+111
+Here you can write a number of clusters that you want: 
+111
+Here you can write a eta that you want: 
+20
+
+Ohhhh! Seq time is 53925.730228 ms
+Oh! ParSeq time is 80477.225326 ms
