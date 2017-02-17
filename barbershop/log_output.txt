@@ -1,0 +1,66 @@
+Number of chairs: 5
+Number of masters: 5
+Number of clients: 10
+There is a master: 1. Time needed to do haircut: 9
+There is a master: 2. Time needed to do haircut: 7
+There is a master: 3. Time needed to do haircut: 7
+There is a master: 4. Time needed to do haircut: 5
+There is a master: 5. Time needed to do haircut: 5
+New day is new life! Barbershop is open now!
+Master: 1 is ready to start now
+Master: 5 is ready to start now
+Master: 2 is ready to start now
+Master: 3 is ready to start now
+Master: 4 is ready to start now
+Arrival of client: 1
+Number of clients in queue: 1
+Master: 3 is ready to start now
+Master: 2 is ready to start now
+Master: 1 is ready to start now
+Client: 1 goes to master: 4
+Arrival of client: 2
+Number of clients in queue: 1
+Master: 1 is ready to start now
+Client: 2 goes to master: 3
+Master: 5 is ready to start now
+Arrival of client: 3
+Number of clients in queue: 1
+Master: 5 is ready to start now
+Master: 2 is ready to start now
+Client: 3 goes to master: 1
+Arrival of client: 4
+Number of clients in queue: 1
+Client: 4 goes to master: 2
+Arrival of client: 5
+Number of clients in queue: 1
+Client: 5 goes to master: 5
+Arrival of client: 6
+Number of clients in queue: 1
+Arrival of client: 7
+Number of clients in queue: 2
+Arrival of client: 8
+Number of clients in queue: 3
+Client 1 goes away from master: 4
+Number of clients in queue: 3
+Client: 6 goes to master: 4
+Arrival of client: 9
+Number of clients in queue: 3
+Arrival of client: 10
+Number of clients in queue: 4
+Client 2 goes away from master: 3
+Number of clients in queue: 4
+Client: 7 goes to master: 3
+Client 5 goes away from master: 5
+Number of clients in queue: 3
+Client: 8 goes to master: 5
+Client 4 goes away from master: 2
+Master: 2 is ready to start now
+Client 3 goes away from master: 1
+Master: 1 is ready to start now
+Client 6 goes away from master: 4
+Master: 4 is ready to start now
+Client 8 goes away from master: 5
+Master: 5 is ready to start now
+Client 7 goes away from master: 3
+Master: 3 is ready to start now
+It was a good time! Barbershop is going to be closed for today.
